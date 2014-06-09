@@ -73,6 +73,20 @@ module CapEC2
       servers.flatten.sort_by {|s| s.tags["Name"]}
     end
 
+    def get_servers
+      servers = []
+      @ec2.each do |_, ec2|
+        instances = ec2.instances
+          .filter(tag(project_tag), "*#{application}*")
+          .filter('instance-state-name', 'running')
+        servers << instances.select do |i|
+          instance_has_tag?(i, stages_tag, stage) &&
+          instance_has_tag?(i, project_tag, application)
+        end
+      end
+      servers.flatten.sort_by {|s| s.tags["Name"]}
+    end
+
     private
 
     def instance_has_tag?(instance, key, value)
