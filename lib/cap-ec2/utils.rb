@@ -13,6 +13,10 @@ module CapEC2
       fetch(:ec2_stages_tag)
     end
 
+    def branch_tag
+      fetch(:ec2_branch_tag)
+    end
+
     def self.contact_point_mapping
       {
         :public_dns => :public_dns_name,
@@ -36,6 +40,7 @@ module CapEC2
           set :ec2_project_tag, config['project_tag'] if config['project_tag']
           set :ec2_roles_tag, config['roles_tag'] if config['roles_tag']
           set :ec2_stages_tag, config['stages_tag'] if config['stages_tag']
+          set :ec2_branch_tag, config['branch_tag'] if config['branch_tag']
 
           set :ec2_access_key_id, config['access_key_id'] if config['access_key_id']
           set :ec2_secret_access_key, config['secret_access_key'] if config['secret_access_key']

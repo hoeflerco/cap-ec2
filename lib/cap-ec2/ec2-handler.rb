@@ -54,6 +54,10 @@ module CapEC2
       Capistrano::Configuration.env.fetch(:application).to_s
     end
 
+    def branch
+      Capistrano::Configuration.env.fetch(:branch).to_s
+    end
+
     def tag(tag_name)
       "tag:#{tag_name}"
     end
@@ -71,7 +75,8 @@ module CapEC2
         servers << instances.select do |i|
           instance_has_tag?(i, stages_tag, stage) &&
             instance_has_tag?(i, project_tag, application) &&
-            (fetch(:ec2_filter_by_status_ok?) ? instance_status_ok?(i) : true)
+            (fetch(:ec2_filter_by_status_ok?) ? instance_status_ok?(i) : true) &&
+            ((fetch(:ec2_branch_tag) && ENV['CAP_EC2_FILTER_BRANCH']) ? instance_has_tag?(i, branch_tag, branch) : true)
         end
       end
       servers.flatten.sort_by {|s| s.tags["Name"]}

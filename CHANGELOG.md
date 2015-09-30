@@ -4,6 +4,8 @@
 
 * Fix issue when tag was present in EC2 but had no value. [@tomconroy](https://github.com/tomconroy)
 
+* Added tag: cap-branch /gs 20150930
+
 ## 0.0.13
 
 * Use AWS.memoize to speed up communication with AWS [@cheald](https://github.com/cheald)
